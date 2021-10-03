@@ -1,0 +1,41 @@
+
+//Structs used for unmarshalling lines into easy format to clean and write
+type Crew struct {
+	titleID   string `csv:"titleID"`
+	directors string `csv:"directors"`
+	writers   string `csv:"writers"`
+}
+
+type Customer_Ratings struct {
+	customerID        string `csv:"customerID"`
+	primaryName       string `csv:"primaryName"`
+	deathYear         string `csv:"deathYear"`
+	primaryProfession string `csv:"primaryProfession"`
+}
+
+type Names struct {
+	principalID string `csv:"nconst"`
+	directors   string `csv:"directors"`
+	writers     string `csv:"writers"`
+}
+
+type Principals struct {
+	titleID     string `csv:"titleID"`
+	principalID string `csv:"nconst"`
+	category    string `csv:"category"`
+	job         string `csv:"job"`
+	characters  string `csv:"characters"`
+}
+
+type Titles struct {
+	titleID   string `csv:"titleID"`
+	titleType string `csv:"titleType"`
+	title     string `csv:"originalTitle"`
+	startYear string `csv:"startYear"`
+	endYear   string `csv:"endYear"`
+	runtime   string `csv:"runtimeMinutes"`
+	genres    string `csv:"genres"`
+	year      string `csv:"Year"`
+	rating    string `csv:"averageRating"`
+	votes     string `csv:"numVotes"`
+}
