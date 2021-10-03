@@ -11,6 +11,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/jackc/pgx/v4"
 )
@@ -21,6 +22,16 @@ func createTables(conn *pgx.Conn) {
 		fmt.Println(err)
 	}
 
+}
+
+func commandLine() {
+	cmd := "psql"
+	args := []string{"-U", "postgres", "-d", "test", "-c", fmt.Sprintf(`\copy doe from '%s' delimiter '\t' csv header;`, os.Args[1])}
+	v, err := exec.Command(cmd, args...).CombinedOutput()
+	if err != nil {
+		panic(string(v))
+	}
+	println("Ok")
 }
 
 func main() {
@@ -37,6 +48,8 @@ func main() {
 	if response == "y" {
 		cleanData()
 	}
+
+	commandLine()
 
 	conn, err := pgx.Connect(context.Background(), "postgres://csce315904_4user:Helpme012@csce-315-db.engr.tamu.edu/csce315904_4db")
 	if err != nil {
