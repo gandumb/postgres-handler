@@ -1,12 +1,11 @@
 package main
 
 import (
-	"encoding/csv"
+	"bufio"
 	"fmt"
 	"io"
 	"os"
-
-	"github.com/gocarina/gocsv"
+	"strings"
 	//https://github.com/gocarina/gocsv
 )
 
@@ -15,58 +14,49 @@ var fileNames = []string{"crew.csv", "customer_ratings.csv", "names.csv", "princ
 var rawExten = "rawData\\"
 var cleanExten = "cleanedData\\"
 
-//Structs used for unmarshalling lines into easy format to clean and write
-type Crew struct {
-	titleID   string `csv:"titleID"`
-	directors string `csv:"directors"`
-	writers   string `csv:"writers"`
+//Helper function for cleanData() string building
+func buildString(properties []string) string {
+	var output string
+
+	for _, data := range properties {
+		output += data + "\t"
+	}
+
+	output += "\n"
+
+	return output
 }
 
-func cleanCrew() {
-	//Used for debugging
-	//_ = fileName
-	fmt.Println("Cleaning " + rawExten + "crew.csv" + " now...")
-
-	//Establish link to output file
-	readFile, err := os.Open(rawExten + "crew.csv")
-
-	if err != nil {
-		fmt.Printf("failed reading data from file: %s", err)
+func cleanLine(line []string) {
+	for _, section := range line {
+		_ = section
 	}
+}
 
-	defer readFile.Close()
+func cleanData() {
+	for _, fileName := range fileNames {
 
-	//Create / Establish link to output file
-	outputFile, err := os.Create(cleanExten + "crew.csv")
+		//_ = fileName // Used for debugging
 
-	if err != nil {
-		fmt.Printf("failed writing to file: %s", err)
-	}
+		fmt.Println("Cleaning " + rawExten + fileName + " now...")
 
-	defer outputFile.Close()
+		//Establish link to output file
+		readFile, err := os.Open(rawExten + fileName)
 
-	gocsv.SetCSVReader(func(in io.Reader) gocsv.CSVReader {
-		r := csv.NewReader(readFile)
-		r.Comma = '\t'
-		return r
-	})
+		if err != nil {
+			fmt.Printf("failed reading data from file: %s", err)
+		}
 
-	crew := []*Crew{}
-	gocsv.UnmarshalFile(readFile, &crew)
+		defer readFile.Close()
 
-	fmt.Println(crew[0])
+		//Create / Establish link to output file
+		outputFile, err := os.Create(cleanExten + fileName)
 
-	//for _, crew := range crew {
-	//	fmt.Println(crew)
+		if err != nil {
+			fmt.Printf("failed writing to file: %s", err)
+		}
 
-	//_, err = io.WriteString(outputFile, crew.titleID+"\t"+crew.directors+"\t"+crew.writers+"\n")
-
-	// if err != nil {
-	// 	fmt.Print(err)
-	// }
-	//}
-
-	/*
+		defer outputFile.Close()
 
 		fileScanner := bufio.NewScanner(readFile)
 		fileScanner.Split(bufio.ScanLines)
@@ -76,15 +66,15 @@ func cleanCrew() {
 
 			properties := strings.Split(line, "\t")
 
-			_, err = io.WriteString(outputFile, properties)
+			//Clean Data Here
+
+			//fmt.Println(buildString(properties)) //Used for debugging
+
+			_, err = io.WriteString(outputFile, buildString(properties))
 
 			if err != nil {
 				fmt.Print(err)
 			}
 		}
-	*/
-}
-
-func cleanData() {
-	cleanCrew()
+	}
 }

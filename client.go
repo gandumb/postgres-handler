@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v4"
 )
 
 func main() {
@@ -30,14 +30,14 @@ func main() {
 		cleanData()
 	}
 
-	conn, err := pgxpool.Connect(context.Background(), "postgres://csce315904_4user:Helpme012@csce-315-db.engr.tamu.edu/csce315904_4db")
+	conn, err := pgx.Connect(context.Background(), "postgres://csce315904_4user:Helpme012@csce-315-db.engr.tamu.edu/csce315904_4db")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
 
 	//Close the connection
-	defer conn.Close()
+	defer conn.Close(context.Background())
 
 	/*
 		//Hello World
@@ -53,8 +53,6 @@ func main() {
 
 	//Verify that tables exists
 
-	// Send the query to the server.
-
 	/*
 		//Insert something into the table
 		_, err = conn.Exec(context.Background(), "INSERT INTO TeamMembers VALUES ('Testy Testingson', 000, 'Test Test', '10/02/21')")
@@ -67,6 +65,4 @@ func main() {
 	//fmt.Print(response)
 
 	//Create tables if they don't exist
-
-	//Upload data to the tables
 }
