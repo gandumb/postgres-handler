@@ -1,0 +1,31 @@
+//Preliminary Data Checks
+SELECT * FROM crew LIMIT 10;
+SELECT * FROM media LIMIT 10;
+SELECT * FROM names LIMIT 10;
+SELECT * FROM users LIMIT 10;
+SELECT * FROM principals LIMIT 10;
+
+//Size Checks
+SELECT COUNT(*) FROM crew;
+SELECT COUNT(*) FROM media;
+SELECT COUNT(*) FROM names;
+SELECT COUNT(*) FROM users;
+SELECT COUNT(*) FROM principals;
+
+//Extracting a column
+SELECT directors FROM crew LIMIT 10;
+SELECT mediaType FROM media LIMIT 10;
+SELECT pname FROM names LIMIT 10;
+SELECT rating FROM users LIMIT 10;
+SELECT jobs FROM principals LIMIT 10;
+
+//Extracting a row
+SELECT titleID FROM crew WHERE titleID = "tt0000023";
+SELECT directors from crew WHERE directors = "nm0525910";
+SELECT titleID FROM media WHERE titleID = "tt0000023";
+SELECT principalID FROM names WHERE principalID = "nm0000001";
+SELECT customerID rating FROM users WHERE customerID = 1488844;
+SELECT titleID FROM principals WHERE titleID = "tt0000023";
+
+
+

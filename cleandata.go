@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"unicode"
 	//https://github.com/gocarina/gocsv
 )
 
@@ -19,10 +20,19 @@ func buildString(properties []string) string {
 	var output string
 
 	for i, data := range properties {
+		data := strings.Map(func(r rune) rune {
+			if r > unicode.MaxASCII {
+				return -1
+			}
+			return r
+		}, data)
+
+		data = strings.TrimSpace(data)
+
 		if i < (len(properties) - 1) {
-			output += strings.TrimSpace(data) + "\t"
+			output += data + "\t"
 		} else {
-			output += strings.TrimSpace(data)
+			output += data
 		}
 	}
 
@@ -59,7 +69,7 @@ func cleanData() {
 		fileScanner := bufio.NewScanner(readFile)
 		fileScanner.Split(bufio.ScanLines)
 
-		//minLength := 0
+		hashMap := make(map[string]bool)
 
 		for fileScanner.Scan() {
 			line := fileScanner.Text()
@@ -69,6 +79,22 @@ func cleanData() {
 			//Clean Data Here
 
 			properties = properties[1:]
+
+			//Check for duplicates
+			if _, ok := hashMap[properties[0]]; ok {
+				continue
+			} else {
+				hashMap[properties[0]] = true
+			}
+
+			//Convert WIN1252 characters to UTF8
+
+			// //Check for nulls
+			// for i, data := range properties {
+			// 	if data == "" {
+			// 		properties[i] = "NULL"
+			// 	}
+			// }
 
 			//fmt.Println(buildString(properties)) //Used for debugging
 
