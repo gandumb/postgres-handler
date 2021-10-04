@@ -61,7 +61,7 @@ func cleanData() {
 		fileScanner := bufio.NewScanner(readFile)
 		fileScanner.Split(bufio.ScanLines)
 
-		minLength := 0
+		//minLength := 0
 
 		for fileScanner.Scan() {
 			line := fileScanner.Text()
@@ -70,11 +70,7 @@ func cleanData() {
 
 			//Clean Data Here
 
-			if len(properties) < minLength {
-				minLength = len(properties)
-			} else {
-				properties = properties[1:]
-			}
+			properties = properties[1:]
 
 			//fmt.Println(buildString(properties)) //Used for debugging
 
