@@ -18,19 +18,17 @@ var cleanExten = "cleanedData\\"
 func buildString(properties []string) string {
 	var output string
 
-	for _, data := range properties {
-		output += data + "\t"
+	for i, data := range properties {
+		if i < (len(properties) - 1) {
+			output += strings.TrimSpace(data) + "\t"
+		} else {
+			output += strings.TrimSpace(data)
+		}
 	}
 
 	output += "\n"
 
 	return output
-}
-
-func cleanLine(line []string) {
-	for _, section := range line {
-		_ = section
-	}
 }
 
 func cleanData() {

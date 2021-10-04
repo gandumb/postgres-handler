@@ -16,6 +16,47 @@ conn = psy.connect(
 conn.autocommit = True
 cursor = conn.cursor()
 
+#Crew
+csvFile = 'cleanedData/crew.csv'
+
+sql = '''COPY Crew(titleID,directors,writers)
+FROM STDIN
+DELIMITER '\t'
+CSV HEADER;'''
+
+cursor.copy_expert(sql, open(csvFile, "r"))
+
+#Media
+csvFile = 'cleanedData/crew.csv'
+
+sql = '''COPY Crew(titleID,directors,writers)
+FROM STDIN
+DELIMITER '\t'
+CSV HEADER;'''
+
+cursor.copy_expert(sql, open(csvFile, "r"))
+
+#Principals
+csvFile = 'cleanedData/crew.csv'
+
+sql = '''COPY Crew(titleID,directors,writers)
+FROM STDIN
+DELIMITER '\t'
+CSV HEADER;'''
+
+cursor.copy_expert(sql, open(csvFile, "r"))
+
+#Names
+csvFile = 'cleanedData/crew.csv'
+
+sql = '''COPY Crew(titleID,directors,writers)
+FROM STDIN
+DELIMITER '\t'
+CSV HEADER;'''
+
+cursor.copy_expert(sql, open(csvFile, "r"))
+
+#Users
 csvFile = 'cleanedData/crew.csv'
 
 sql = '''COPY Crew(titleID,directors,writers)
